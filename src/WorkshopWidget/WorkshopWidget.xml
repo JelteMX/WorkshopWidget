@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="WorkshopWidget.widget.WorkshopWidget" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
+    <name>WorkshopWidget</name>
+    <description>Just a sample widget for the widget workshop</description>
+    <icon></icon>
+    <properties>
+        <property key="mfToExecute" type="microflow" required="false" defaultValue="">
+            <caption>Microflow</caption>
+            <category>Behavior</category>
+            <description>The microflow to execute on click.</description>
+            <returnType type="Boolean"/>
+        </property>
+    </properties>
+</widget>
