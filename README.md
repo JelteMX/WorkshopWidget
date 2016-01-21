@@ -16,6 +16,10 @@ This is the Workshop widget
 
 ## References
 
+[Mendix docs](https://world.mendix.com/display/docs/Overview)
+
+[Client API](https://apidocs.mendix.com/6/client/)
+
 [XML Reference guide](https://world.mendix.com/display/refguide6/XML+Reference+Guide)
 
 [Dojo Reference guide](http://dojotoolkit.org/reference-guide/1.10/dojo/index.html#dojo-index)
