@@ -44,9 +44,12 @@ define([
 
         // DOM elements
         rootNode: null,
+        widgetButton: null,
 
         // Parameters configured in the Modeler.
         mfToExecute: "",
+        name: "",
+        changeValue: "",
 
         // Internal variables. Non-primitives created in the prototype are shared between all widget instances.
         _handles: null,
@@ -56,7 +59,7 @@ define([
         // dojo.declare.constructor is called to construct the widget instance. Implement to initialize non-primitive properties.
         constructor: function() {
             // Uncomment the following line to enable debug messages
-            //logger.level(logger.DEBUG);
+            logger.level(logger.DEBUG);
             this._handles = [];
         },
 
@@ -92,6 +95,7 @@ define([
         // Attach events to HTML dom elements
         _setupEvents: function() {
             logger.debug(this.id + "._setupEvents");
+            this.connect(this.widgetButton, "click", dojoLang.hitch(this, this._execmf));
         },
 
         // Rerender the interface.
@@ -100,6 +104,10 @@ define([
 
             if (this._contextObj !== null) {
                 dojoStyle.set(this.domNode, "display", "block");
+                var name = this._contextObj.get(this.name);
+                var newVal = this._contextObj.get(this.changeValue) ? "false" : " true";
+
+                this.widgetButton.innerHTML = "Set " + name + " to " + newVal;
             } else {
                 dojoStyle.set(this.domNode, "display", "none");
             }
