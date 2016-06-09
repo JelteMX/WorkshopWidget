@@ -4,22 +4,13 @@
     <description>Just a sample widget for the widget workshop</description>
     <icon></icon>
     <properties>
-        <property key="name" type="attribute">
-            <caption>Name</caption>
-            <category>Appearance</category>
-            <description>The name described on the button</description>
-            <attributeTypes>
-                <attributeType name="String"/>
-            </attributeTypes>
-        </property>
-        <property key="changeValue" type="attribute">
-            <caption>Message</caption>
-            <category>Behavior</category>
-            <description>Which true/false value are we going to change?</description>
-            <attributeTypes>
-                <attributeType name="Boolean"/>
-            </attributeTypes>
-        </property>
+        <!-- TODO:
+
+            Add two properties:
+            key: "name", which should be an attribute that refers to the name described on the button
+            key: "changeValue", which should be attribute that refers to the value that we are going to change
+
+        -->
         <property key="mfToExecute" type="microflow" required="false" defaultValue="">
             <caption>Microflow</caption>
             <category>Behavior</category>

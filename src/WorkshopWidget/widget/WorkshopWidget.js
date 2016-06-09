@@ -1,16 +1,3 @@
-/*global logger*/
-/*
-    WorkshopWidget
-    ========================
-
-    @file      : WorkshopWidget.js
-    @version   : 1.0.0
-    @author    : Mendix
-    @date      : 1/21/2016
-    @copyright : Mendix 2016
-    @license   : Apache 2
-*/
-
 // Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
 define([
     "dojo/_base/declare",
@@ -44,7 +31,7 @@ define([
 
         // DOM elements
         rootNode: null,
-        widgetButton: null,
+        //widgetButton: null,
 
         // Parameters configured in the Modeler.
         mfToExecute: "",
@@ -76,9 +63,7 @@ define([
 
             this._contextObj = obj;
             this._resetSubscriptions();
-            this._updateRendering();
-
-            callback();
+            this._updateRendering(callback); // We are passing the callback to updateRendering, so it is called there when you have finished manipulating the domNodes;
         },
 
         // mxui.widget._WidgetBase.resize is called when the page's layout is recalculated. Implement to do sizing calculations. Prefer using CSS instead.
@@ -99,64 +84,21 @@ define([
         },
 
         // Rerender the interface.
-        _updateRendering: function() {
+        _updateRendering: function(callback) {
             logger.debug(this.id + "._updateRendering");
 
             if (this._contextObj !== null) {
                 dojoStyle.set(this.domNode, "display", "block");
-                var name = this._contextObj.get(this.name);
-                var newVal = this._contextObj.get(this.changeValue) ? "false" : " true";
 
-                this.widgetButton.innerHTML = "Set " + name + " to " + newVal;
+                var name = null; // this should the value of the name from the context object (use this._contextObj.get)
+                var newVal = null; // this should be the new value that will be displayed, so basically get the value from the this._contextObj and reverse it.
+
+                //this.widgetButton.innerHTML = "Set " + name + " to " + newVal;
             } else {
                 dojoStyle.set(this.domNode, "display", "none");
             }
 
-            // Important to clear all validations!
-            this._clearValidations();
-        },
-
-        // Handle validations.
-        _handleValidation: function(validations) {
-            logger.debug(this.id + "._handleValidation");
-            this._clearValidations();
-
-            var validation = validations[0],
-                message = validation.getReasonByAttribute(this.name);
-
-            if (this.readOnly) {
-                validation.removeAttribute(this.name);
-            } else if (message) {
-                this._addValidation(message);
-                validation.removeAttribute(this.name);
-            }
-        },
-
-        // Clear validations.
-        _clearValidations: function() {
-            logger.debug(this.id + "._clearValidations");
-            dojoConstruct.destroy(this._alertDiv);
-            this._alertDiv = null;
-        },
-
-        // Show an error message.
-        _showError: function(message) {
-            logger.debug(this.id + "._showError");
-            if (this._alertDiv !== null) {
-                dojoHtml.set(this._alertDiv, message);
-                return true;
-            }
-            this._alertDiv = dojoConstruct.create("div", {
-                "class": "alert alert-danger",
-                "innerHTML": message
-            });
-            dojoConstruct.place(this.domNode, this._alertDiv);
-        },
-
-        // Add a validation.
-        _addValidation: function(message) {
-            logger.debug(this.id + "._addValidation");
-            this._showError(message);
+            mendix.lang.nullExec(callback);
         },
 
         // Reset subscriptions.
@@ -187,13 +129,7 @@ define([
                     })
                 });
 
-                var validationHandle = this.subscribe({
-                    guid: this._contextObj.getGuid(),
-                    val: true,
-                    callback: dojoLang.hitch(this, this._handleValidation)
-                });
-
-                this._handles = [ objectHandle, attrHandle, validationHandle ];
+                this._handles = [ objectHandle, attrHandle ];
             }
         },
 
@@ -210,7 +146,7 @@ define([
                     },
                     params: {
                         actionname: this.mfToExecute,
-                        applyto: 'selection',
+                        applyto: "selection",
                         guids: [this._contextObj.getGuid()]
                     },
                     callback: function () {},
